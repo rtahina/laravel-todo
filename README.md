@@ -1,4 +1,5 @@
 # Laravel Todo
+A simple Todo app with Laravel and Vue3
 ## Install
 * Clone the repo
 * Copy .env.example and rename to .env. Set your env variables

@@ -1,4 +1,4 @@
-# Test ManaWeb
+# Laravel Todo
 ## Install
 * Clone the repo
 * Copy .env.example and rename to .env. Set your env variables

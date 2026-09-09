@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Task;
+namespace App\Actions\Task\V1;
 
-use App\Actions\Task\DTO\TaskData;
-use App\Domain\Task\Task;
-use App\Domain\Task\TaskRepositoryInterface;
-use App\Infrastructure\Task\Persistence\TaskMapper;
+use App\Actions\Task\V1\DTO\TaskData;
+use App\Domain\Task\V1\Task;
+use App\Domain\Task\V1\TaskRepositoryInterface;
+use App\Infrastructure\Task\Persistence\V1\TaskMapper;
 
 final class CreateTask
 {

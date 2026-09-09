@@ -6,11 +6,12 @@
     
     const store = toDoStore();
     const nbrItems = ref(0);
+    const API_VERSION = 'v1';
     const fetchTodos = async() => {
         store.isReady = false;
         
         try {
-            fetch("http://127.0.0.1:8000/api/tasks")
+            fetch(`${import.meta.env.VITE_API_URL}/api/${API_VERSION}/tasks`)
             .then(data => data.json())
             .then(data => {
                 store.tasks = data.data;

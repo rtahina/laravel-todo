@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Task;
+namespace App\Actions\Task\V1;
 
-use App\Actions\Task\DTO\TaskData;
-use App\Domain\Task\TaskRepositoryInterface;
+use App\Actions\Task\V1\DTO\TaskData;
+use App\Domain\Task\V1\TaskRepositoryInterface;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final class ToggleTaskStatus
 {
@@ -14,6 +15,9 @@ final class ToggleTaskStatus
     public function handle(int $id): TaskData
     {
         $task = $this->repository->findById($id);
+        if  (is_null($task)) {
+            throw new ModelNotFoundException('Unfound resource');
+        }
         $toggledTask = $task::toggleStatus($task);
         $this->repository->save($toggledTask);
         

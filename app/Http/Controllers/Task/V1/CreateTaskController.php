@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Task\V1;
 
-use App\Actions\Task\CreateTask;
+use App\Actions\Task\V1\CreateTask;
 use App\Http\Requests\TaskRequest;
-use App\Http\Resources\TaskResource;
+use App\Http\Resources\V1\TaskResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 
 final class CreateTaskController extends Controller
 {

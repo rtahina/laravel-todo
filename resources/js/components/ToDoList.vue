@@ -11,7 +11,7 @@
         store.isReady = false;
         
         try {
-            fetch(`${import.meta.env.VITE_API_URL}/api/${API_VERSION}/tasks`)
+            fetch(`${import.meta.env.VITE_API_URL}/${API_VERSION}/tasks`)
             .then(data => data.json())
             .then(data => {
                 store.tasks = data.data;

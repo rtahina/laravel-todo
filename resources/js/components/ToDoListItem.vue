@@ -20,7 +20,7 @@
 
     // Toggle a task is_completed column
     const toggleComplete = (id) => {
-        const url = `${import.meta.env.VITE_API_URL}/api/${API_VERSION}/tasks/${id}`;
+        const url = `${import.meta.env.VITE_API_URL}/${API_VERSION}/tasks/${id}`;
         try {
             fetch(url, {
                 method: 'PATCH',
@@ -61,7 +61,7 @@
     
     const deleteTask = (id) => {
         store.isReady = false;
-        const url = `${import.meta.env.VITE_API_URL}/api/v1/tasks/${id}`;
+        const url = `${import.meta.env.VITE_API_URL}/v1/tasks/${id}`;
         try {
             const deletedId = id;
             const data = fetch(url, {

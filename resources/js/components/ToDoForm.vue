@@ -12,7 +12,7 @@
     const addNewTask = () =>{
         store.errorMessage = '';
         store.isReady = false;
-        const url = `${import.meta.env.VITE_API_URL}/api/${API_VERSION}/tasks/`;
+        const url = `${import.meta.env.VITE_API_URL}/${API_VERSION}/tasks/`;
         const patchData = {
             title: newTodoItem.value
         };

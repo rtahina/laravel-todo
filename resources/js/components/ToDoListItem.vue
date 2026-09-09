@@ -2,7 +2,7 @@
     import { toDoStore } from "@/store/ToDoStore";
    
     const store = toDoStore();
-    
+    const API_VERSION = 'v1';
     const props = defineProps({
         id: {
             type: Number,
@@ -20,7 +20,7 @@
 
     // Toggle a task is_completed column
     const toggleComplete = (id) => {
-        const url = `http://127.0.0.1:8000/api/tasks/${id}`;
+        const url = `${import.meta.env.VITE_API_URL}/api/${API_VERSION}/tasks/${id}`;
         try {
             fetch(url, {
                 method: 'PATCH',
@@ -61,7 +61,7 @@
     
     const deleteTask = (id) => {
         store.isReady = false;
-        const url = `http://127.0.0.1:8000/api/tasks/${id}`;
+        const url = `${import.meta.env.VITE_API_URL}/api/v1/tasks/${id}`;
         try {
             const deletedId = id;
             const data = fetch(url, {

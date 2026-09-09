@@ -6,12 +6,13 @@
 
     const newTodoItem = ref('');
     const store = toDoStore();
+    const API_VERSION = 'v1';
     const { errorMessage, isReady, toggleHideActive, toggleHideCompleted, resetToggles } = store;
 
     const addNewTask = () =>{
         store.errorMessage = '';
         store.isReady = false;
-        const url = `http://127.0.0.1:8000/api/tasks/`;
+        const url = `${import.meta.env.VITE_API_URL}/api/${API_VERSION}/tasks/`;
         const patchData = {
             title: newTodoItem.value
         };

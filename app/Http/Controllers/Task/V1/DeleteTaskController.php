@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Task\V1;
 
-use App\Actions\Task\DeleteTask;
+use App\Actions\Task\V1\DeleteTask;
 use App\Domain\Task\Exceptions\TaskNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 
 final class DeleteTaskController extends Controller
 {

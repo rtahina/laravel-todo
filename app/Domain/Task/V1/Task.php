@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Task;
+namespace App\Domain\Task\V1;
 
 use DateTimeImmutable;
 

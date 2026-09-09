@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Task\DTO;
+namespace App\Actions\Task\V1\DTO;
 
-use App\Domain\Task\Task;
+use App\Domain\Task\V1\Task;
 
 final class TaskData
 {

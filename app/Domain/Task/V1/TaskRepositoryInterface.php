@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Task;
+namespace App\Domain\Task\V1;
 
-use App\Infrastructure\Task\Persistence\TaskModel;
+use App\Infrastructure\Task\Persistence\V1\TaskModel;
 
 interface TaskRepositoryInterface
 {

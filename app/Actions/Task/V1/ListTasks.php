@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Task;
+namespace App\Actions\Task\V1;
 
-use App\Actions\Task\DTO\TaskData;
-use App\Domain\Task\TaskRepositoryInterface;
+use App\Actions\Task\V1\DTO\TaskData;
+use App\Domain\Task\V1\TaskRepositoryInterface;
 
 final class ListTasks
 {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Actions\Task\V1;
 
 use App\Actions\Task\V1\DTO\TaskData;
+use App\Domain\Task\V1\Exceptions\TaskNotFoundException;
 use App\Domain\Task\V1\TaskRepositoryInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final class ToggleTaskStatus
 {
@@ -16,7 +16,7 @@ final class ToggleTaskStatus
     {
         $task = $this->repository->findById($id);
         if  (is_null($task)) {
-            throw new ModelNotFoundException('Unfound resource');
+            throw TaskNotFoundException::withId($id);
         }
         $toggledTask = $task::toggleStatus($task);
         $this->repository->save($toggledTask);

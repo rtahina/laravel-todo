@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Task\V1;
 
 use App\Actions\Task\V1\DeleteTask;
-use App\Domain\Task\Exceptions\TaskNotFoundException;
+use App\Domain\Task\V1\Exceptions\TaskNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;

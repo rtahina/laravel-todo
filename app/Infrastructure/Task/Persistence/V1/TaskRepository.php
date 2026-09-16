@@ -11,14 +11,14 @@ final class TaskRepository implements TaskRepositoryInterface
 {
     public function __construct(private readonly TaskMapper $mapper) {}
 
-    public function save(Task $task): TaskModel
+    public function save(Task $task): Task
     {
-        $task = TaskModel::query()->updateOrCreate(
+        $taskModel = TaskModel::query()->updateOrCreate(
             ['id' => $task->id()],
             $this->mapper->toAttributes($task),
         );
 
-        return $task;
+        return $this->mapper->toDomain($taskModel);
     }
 
     public function findById(int $id): ?Task

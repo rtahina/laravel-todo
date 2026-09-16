@@ -16,9 +16,8 @@ final class CreateTask
     public function handle(string $title): TaskData
     {
         $task = Task::create($title);
-        $taskModel = $this->repository->save($task);
-        $taskDomain = (new TaskMapper)->toDomain($taskModel);
-
+        $taskDomain = $this->repository->save($task);
+        
         return TaskData::fromEntity($taskDomain);
     }
 }

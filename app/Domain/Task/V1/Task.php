@@ -21,7 +21,7 @@ final class Task
             id: 0,
             title: $title,
             isCompleted: false,
-            createdAt: new DateTimeImmutable()
+            createdAt: new DateTimeImmutable
         );
     }
 
@@ -34,11 +34,12 @@ final class Task
         return new self($id, $title, $isComplete, $createdAt);
     }
 
-    public static function toggleStatus(Task $task): self {
+    public static function toggleStatus(Task $task): self
+    {
         return new self(
-            $task->id(), 
-            $task->title(), 
-            !$task->isCompleted(), // Toggle is_completed
+            $task->id(),
+            $task->title(),
+            ! $task->isCompleted(), // Toggle is_completed
             $task->createdAt()
         );
     }

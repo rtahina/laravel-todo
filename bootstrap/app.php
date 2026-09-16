@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (NotFoundHttpException $e) {
             return response()->json([
                 'message' => 'Resource introuvable.',
-                'errors' => ['La tâche est introuvable']
+                'errors' => ['La tâche est introuvable'],
             ], 404);
         });
     })->create();

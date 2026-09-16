@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Http\Responses;
+
+use Laravel\Fortify\Contracts\LogoutResponse as LogoutResponseContract;
+
+class ApiLogoutResponse implements LogoutResponseContract
+{
+    public function toResponse($request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Logged out']);
+    }
+}

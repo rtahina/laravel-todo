@@ -17,7 +17,7 @@ final class TaskRepository implements TaskRepositoryInterface
             ['id' => $task->id()],
             $this->mapper->toAttributes($task),
         );
-        
+
         return $task;
     }
 

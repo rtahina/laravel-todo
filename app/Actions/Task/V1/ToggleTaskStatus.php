@@ -15,12 +15,12 @@ final class ToggleTaskStatus
     public function handle(int $id): TaskData
     {
         $task = $this->repository->findById($id);
-        if  (is_null($task)) {
+        if (is_null($task)) {
             throw TaskNotFoundException::withId($id);
         }
         $toggledTask = $task::toggleStatus($task);
         $this->repository->save($toggledTask);
-        
+
         return TaskData::fromEntity($toggledTask);
     }
 }

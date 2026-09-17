@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Actions\Task\V1\CreateTask;
+use App\Actions\User\DTO\UserData;
 use App\Infrastructure\Task\Persistence\V1\TaskMapper;
 use App\Infrastructure\Task\Persistence\V1\TaskRepository;
 use App\Models\User;
@@ -17,15 +18,15 @@ class TaskApiTest extends TestCase
     /** @test */
     public function api_tasks_can_be_listed(): void
     {
-        Sanctum::actingAs(
+        $user = Sanctum::actingAs(
             User::factory()->create(),
             ['*']
         );
-
+        $userData = UserData::fromModel($user);
         $repository = new TaskRepository(new TaskMapper);
         $taskCreator = new CreateTask($repository);
         for ($i = 1; $i <= 3; $i++) {
-            $taskCreator->handle('Test Task #'.$i);
+            $taskCreator->handle('Test Task #'.$i, $userData);
         }
 
         $response = $this->get('/api/v1/tasks');
@@ -36,12 +37,13 @@ class TaskApiTest extends TestCase
     /** @test */
     public function api_task_can_be_created(): void
     {
-        Sanctum::actingAs(
+        $user = Sanctum::actingAs(
             User::factory()->create(),
             ['*']
         );
 
         $payload = [
+            'user_id' => $user->id,
             'title' => 'New task',
         ];
 
@@ -54,15 +56,15 @@ class TaskApiTest extends TestCase
     /** @test */
     public function api_task_status_can_be_toggled(): void
     {
-        Sanctum::actingAs(
+        $user = Sanctum::actingAs(
             User::factory()->create(),
             ['*']
         );
 
         $repository = new TaskRepository(new TaskMapper);
         $taskCreator = new CreateTask($repository);
-        $task = $taskCreator->handle('Test Task');
-
+        $userData = UserData::fromModel($user);
+        $task = $taskCreator->handle('Test Task', $userData);
         $response = $this->patchJson('/api/v1/tasks/'.$task->id);
 
         $response->assertStatus(200)
@@ -72,14 +74,15 @@ class TaskApiTest extends TestCase
     /** @test */
     public function api_task_can_be_deleted(): void
     {
-        Sanctum::actingAs(
+        $user = Sanctum::actingAs(
             User::factory()->create(),
             ['*']
         );
 
         $repository = new TaskRepository(new TaskMapper);
         $taskCreator = new CreateTask($repository);
-        $task = $taskCreator->handle('Test Task');
+        $userData = UserData::fromModel($user);
+        $task = $taskCreator->handle('Test Task', $userData);
 
         $response = $this->deleteJson('/api/v1/tasks/'.$task->id);
 

@@ -13,6 +13,7 @@ final class TaskMapper
     {
         return Task::reconstitute(
             id: $model->id,
+            userId: $model->user_id,
             title: $model->title,
             isComplete: (bool) $model->is_completed,
             createdAt: new DateTimeImmutable($model->created_at)
@@ -23,6 +24,7 @@ final class TaskMapper
     {
         return [
             'id' => $task->id(),
+            'user_id' => $task->userId(),
             'title' => $task->title(),
             'is_completed' => $task->isCompleted(),
             'created_at' => $task->createdAt()->format('Y-m-d H:i:s'),

@@ -6,9 +6,11 @@ use App\Actions\Task\V1\CreateTask;
 use App\Actions\Task\V1\DeleteTask;
 use App\Actions\Task\V1\ListTasks;
 use App\Actions\Task\V1\ToggleTaskStatus;
+use App\Actions\User\DTO\UserData;
 use App\Domain\Task\V1\Exceptions\TaskNotFoundException;
 use App\Infrastructure\Task\Persistence\V1\TaskMapper;
 use App\Infrastructure\Task\Persistence\V1\TaskRepository;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -21,9 +23,13 @@ class TaskTest extends TestCase
     {
         $repository = new TaskRepository(new TaskMapper);
         $taskCreator = new CreateTask($repository);
+        $user = User::factory()->create();
+        $userData = UserData::fromModel($user);
+
         for ($i = 1; $i <= 3; $i++) {
-            $taskCreator->handle('Test Task #'.$i);
+            $taskCreator->handle('Test Task #'.$i, $userData);
         }
+
         $listTask = new ListTasks($repository);
         $tasks = $listTask->handle();
         $this->assertEquals(3, count($tasks));
@@ -34,7 +40,9 @@ class TaskTest extends TestCase
     {
         $repository = new TaskRepository(new TaskMapper);
         $taskCreator = new CreateTask($repository);
-        $taskCreator->handle('Test Task');
+        $user = User::factory()->create();
+        $userData = UserData::fromModel($user);
+        $taskCreator->handle('Test Task', $userData);
         $listTask = new ListTasks($repository);
         $tasks = $listTask->handle();
         $this->assertEquals(1, count($tasks));
@@ -45,7 +53,9 @@ class TaskTest extends TestCase
     {
         $repository = new TaskRepository(new TaskMapper);
         $taskCreator = new CreateTask($repository);
-        $task = $taskCreator->handle('Test Task');
+        $user = User::factory()->create();
+        $userData = UserData::fromModel($user);
+        $task = $taskCreator->handle('Test Task', $userData);
         $toggleTaskStatus = new ToggleTaskStatus($repository);
         $updatedTask = $toggleTaskStatus->handle($task->id);
         $this->assertNotEquals($task->isCompleted, $updatedTask->isCompleted);
@@ -56,7 +66,9 @@ class TaskTest extends TestCase
     {
         $repository = new TaskRepository(new TaskMapper);
         $taskCreator = new CreateTask($repository);
-        $task = $taskCreator->handle('Test Task');
+        $user = User::factory()->create();
+        $userData = UserData::fromModel($user);
+        $task = $taskCreator->handle('Test Task', $userData);
         $deleteTask = new DeleteTask($repository);
         $deleteTask->handle($task->id);
         $listTask = new ListTasks($repository);

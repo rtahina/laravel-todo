@@ -1,5 +1,7 @@
 <?php
 
+use App\Domain\Task\V1\Exceptions\TaskNotFoundException;
+use App\Domain\Task\V1\Exceptions\UserNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -18,8 +20,22 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (NotFoundHttpException $e) {
             return response()->json([
-                'message' => 'Resource introuvable.',
-                'errors' => ['La tâche est introuvable'],
+                'message' => 'Resource not found.',
+                'errors' => ['The resource was not found.'],
+            ], 404);
+        });
+
+        $exceptions->render(function (TaskNotFoundException $e) {
+            return response()->json([
+                'message' => 'Task not found.',
+                'errors' => ['The task was not found.'],
+            ], 404);
+        });
+
+        $exceptions->render(function (UserNotFoundException $e) {
+            return response()->json([
+                'message' => 'User not found.',
+                'errors' => ['The user was not found.'],
             ], 404);
         });
     })->create();

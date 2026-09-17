@@ -10,6 +10,7 @@ final class TaskData
 {
     public function __construct(
         public readonly int $id,
+        public readonly int $userId,
         public readonly string $title,
         public readonly bool $isCompleted,
         public readonly string $createdAt,
@@ -19,6 +20,7 @@ final class TaskData
     {
         return new self(
             id: $task->id(),
+            userId: $task->userId(),
             title: $task->title(),
             isCompleted: (bool) $task->isCompleted(),
             createdAt: $task->createdAt()->format(DATE_ATOM)

@@ -4,12 +4,11 @@ namespace Tests\Feature;
 
 use App\Actions\Task\V1\CreateTask;
 use App\Actions\Task\V1\DeleteTask;
+use App\Actions\Task\V1\DTO\TaskData;
 use App\Actions\Task\V1\ListTasks;
 use App\Actions\Task\V1\ToggleTaskStatus;
-use App\Actions\User\DTO\UserData;
 use App\Domain\Task\V1\Exceptions\TaskNotFoundException;
-use App\Infrastructure\Task\Persistence\V1\TaskMapper;
-use App\Infrastructure\Task\Persistence\V1\TaskRepository;
+use App\Domain\Task\V1\TaskRepositoryInterface;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -18,19 +17,29 @@ class TaskTest extends TestCase
 {
     use RefreshDatabase;
 
+    private TaskRepositoryInterface $taskRepository;
+    private User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->taskRepository = app(TaskRepositoryInterface::class);
+        $this->user = User::factory()->create();
+    }
+
     /** @test */
     public function tasks_can_be_listed(): void
     {
-        $repository = new TaskRepository(new TaskMapper);
-        $taskCreator = new CreateTask($repository);
-        $user = User::factory()->create();
-        $userData = UserData::fromModel($user);
-
+        $taskCreator = new CreateTask($this->taskRepository);
+        
         for ($i = 1; $i <= 3; $i++) {
-            $taskCreator->handle('Test Task #'.$i, $userData);
+            $taskName = 'Test Task #'. $i;
+            $taskData = new TaskData(0, $this->user->id, $taskName);
+            $taskCreator->handle($taskData);
         }
 
-        $listTask = new ListTasks($repository);
+        $listTask = new ListTasks($this->taskRepository);
         $tasks = $listTask->handle();
         $this->assertEquals(3, count($tasks));
     }
@@ -38,12 +47,10 @@ class TaskTest extends TestCase
     /** @test */
     public function a_task_can_be_created(): void
     {
-        $repository = new TaskRepository(new TaskMapper);
-        $taskCreator = new CreateTask($repository);
-        $user = User::factory()->create();
-        $userData = UserData::fromModel($user);
-        $taskCreator->handle('Test Task', $userData);
-        $listTask = new ListTasks($repository);
+        $taskCreator = new CreateTask($this->taskRepository);
+        $taskData = new TaskData(0, $this->user->id, 'Test task');
+        $taskCreator->handle($taskData);
+        $listTask = new ListTasks($this->taskRepository);
         $tasks = $listTask->handle();
         $this->assertEquals(1, count($tasks));
     }
@@ -51,12 +58,10 @@ class TaskTest extends TestCase
     /** @test */
     public function a_task_status_can_be_toggled(): void
     {
-        $repository = new TaskRepository(new TaskMapper);
-        $taskCreator = new CreateTask($repository);
-        $user = User::factory()->create();
-        $userData = UserData::fromModel($user);
-        $task = $taskCreator->handle('Test Task', $userData);
-        $toggleTaskStatus = new ToggleTaskStatus($repository);
+        $taskCreator = new CreateTask($this->taskRepository);
+        $taskData = new TaskData(0, $this->user->id, 'Test task');
+        $task = $taskCreator->handle($taskData);
+        $toggleTaskStatus = new ToggleTaskStatus($this->taskRepository);
         $updatedTask = $toggleTaskStatus->handle($task->id);
         $this->assertNotEquals($task->isCompleted, $updatedTask->isCompleted);
     }
@@ -64,14 +69,12 @@ class TaskTest extends TestCase
     /** @test */
     public function a_task_can_be_deleted(): void
     {
-        $repository = new TaskRepository(new TaskMapper);
-        $taskCreator = new CreateTask($repository);
-        $user = User::factory()->create();
-        $userData = UserData::fromModel($user);
-        $task = $taskCreator->handle('Test Task', $userData);
-        $deleteTask = new DeleteTask($repository);
+        $taskCreator = new CreateTask($this->taskRepository);
+        $taskData = new TaskData(0, $this->user->id, 'Test task');
+        $task = $taskCreator->handle($taskData);
+        $deleteTask = new DeleteTask($this->taskRepository);
         $deleteTask->handle($task->id);
-        $listTask = new ListTasks($repository);
+        $listTask = new ListTasks($this->taskRepository);
         $tasks = $listTask->handle();
         $this->assertEquals(0, count($tasks));
     }
@@ -80,8 +83,7 @@ class TaskTest extends TestCase
     public function a_task_not_found_exception_thrown_on_toggle(): void
     {
         $this->expectException(TaskNotFoundException::class);
-        $repository = new TaskRepository(new TaskMapper);
-        $toggleTaskStatus = new ToggleTaskStatus($repository);
+        $toggleTaskStatus = new ToggleTaskStatus($this->taskRepository);
         $toggleTaskStatus->handle(1);
     }
 
@@ -89,8 +91,7 @@ class TaskTest extends TestCase
     public function a_task_not_found_exception_thrown_on_delete(): void
     {
         $this->expectException(TaskNotFoundException::class);
-        $repository = new TaskRepository(new TaskMapper);
-        $deleteTask = new ToggleTaskStatus($repository);
+        $deleteTask = new ToggleTaskStatus($this->taskRepository);
         $deleteTask->handle(1);
     }
 }

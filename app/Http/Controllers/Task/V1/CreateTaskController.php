@@ -25,7 +25,7 @@ final class CreateTaskController extends Controller
         if (is_null($currentUser)) {
             throw new UserNotFoundException('Creating a task needs a user.');
         }
-        $user = new UserData($currentUser->id, $currentUser->name, $currentUser->email);
+        $user = new UserData($currentUser->id, $currentUser->name, $currentUser->email, $currentUser->password);
         $task = $action->handle($request->get('title'), $user);
 
         return (new TaskResource($task))->response()->setStatusCode(Response::HTTP_CREATED);

@@ -14,7 +14,8 @@ final class UserMapper
         return User::reconstitute(
             id: $model->id,
             name: $model->name,
-            email: $model->email
+            email: $model->email,
+            password: $model->password
         );
     }
 
@@ -24,6 +25,7 @@ final class UserMapper
             'id' => $user->id(),
             'name' => $user->name(),
             'email' => $user->email(),
+            'password' => $user->password(),
         ];
     }
 }

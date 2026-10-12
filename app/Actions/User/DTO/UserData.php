@@ -12,7 +12,8 @@ final class UserData
     public function __construct(
         public readonly int $id,
         public readonly string $name,
-        public readonly string $email
+        public readonly string $email,
+        public readonly string $password
     ) {}
 
     public static function fromEntity(UserEntity $user): self
@@ -20,7 +21,8 @@ final class UserData
         return new self(
             id: $user->id(),
             name: $user->name(),
-            email: $user->email()
+            email: $user->email(),
+            password: $user->password()
         );
     }
 
@@ -29,7 +31,8 @@ final class UserData
         return new self(
             id: $user->id,
             name: $user->name,
-            email: $user->email
+            email: $user->email,
+            password: $user->password
         );
     }
 }

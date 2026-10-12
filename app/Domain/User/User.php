@@ -9,24 +9,27 @@ final class User
     private function __construct(
         private readonly ?int $id,
         private string $name,
-        private string $email
+        private string $email,
+        private string $password
     ) {}
 
-    public static function create(string $name, string $email): self
+    public static function create(string $name, string $email, string $password): self
     {
         return new self(
             id: 0,
             name: $name,
-            email: $email
+            email: $email,
+            password: $password
         );
     }
 
     public static function reconstitute(
         int $id,
         string $name,
-        string $email
+        string $email,
+        string $password
     ): self {
-        return new self($id, $name, $email);
+        return new self($id, $name, $email, $password);
     }
 
     public function id(): int
@@ -42,5 +45,10 @@ final class User
     public function email(): string
     {
         return $this->email;
+    }
+
+    public function password(): string
+    {
+        return $this->password;
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Task\V1\DTO;
 
 use App\Domain\Task\V1\Task;
+use DateTimeImmutable;
 
 final class TaskData
 {
@@ -12,8 +13,8 @@ final class TaskData
         public readonly int $id,
         public readonly int $userId,
         public readonly string $title,
-        public readonly bool $isCompleted,
-        public readonly string $createdAt,
+        public readonly bool $isCompleted = false,
+        public readonly DateTimeImmutable $createdAt = new DateTimeImmutable(),
     ) {}
 
     public static function fromEntity(Task $task): self
@@ -23,7 +24,7 @@ final class TaskData
             userId: $task->userId(),
             title: $task->title(),
             isCompleted: (bool) $task->isCompleted(),
-            createdAt: $task->createdAt()->format(DATE_ATOM)
+            createdAt: new DateTimeImmutable($task->createdAt()->format(DATE_ATOM))
         );
     }
 }

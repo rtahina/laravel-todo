@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Task\V1;
 
+use App\Actions\Task\V1\DTO\TaskData;
 use DateTimeImmutable;
 
 final class Task
@@ -16,12 +17,12 @@ final class Task
         private readonly DateTimeImmutable $createdAt
     ) {}
 
-    public static function create(int $userId, string $title): self
+    public static function create(TaskData $task): self
     {
         return new self(
             id: 0,
-            userId: $userId,
-            title: $title,
+            userId: $task->userId,
+            title: $task->title,
             isCompleted: false,
             createdAt: new DateTimeImmutable
         );

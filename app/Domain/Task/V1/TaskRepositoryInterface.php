@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Task\V1;
 
-use App\Infrastructure\Task\Persistence\V1\TaskModel;
-
 interface TaskRepositoryInterface
 {
-    public function save(Task $task): TaskModel;
+    public function save(Task $task): Task;
 
     public function findById(int $id): ?Task;
 

@@ -3,25 +3,43 @@
 namespace Tests\Feature;
 
 use App\Actions\Task\V1\CreateTask;
+use App\Actions\Task\V1\DTO\TaskData;
+use App\Domain\Task\V1\TaskRepositoryInterface;
 use App\Infrastructure\Task\Persistence\V1\TaskMapper;
 use App\Infrastructure\Task\Persistence\V1\TaskRepository;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class TaskApiTest extends TestCase
 {
     use RefreshDatabase;
 
+    private TaskRepositoryInterface $taskRepository;
+    private User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->taskRepository = app(TaskRepositoryInterface::class);
+        $this->user = Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+    }
+
     /** @test */
     public function api_tasks_can_be_listed(): void
     {
-        $repository = new TaskRepository(new TaskMapper());
-        $taskCreator = new CreateTask($repository);
-        for($i = 1; $i <= 3; $i++) {
-            $taskCreator->handle('Test Task #' . $i);
-        }    
-    
+        $taskCreator = new CreateTask($this->taskRepository);
+        for ($i = 1; $i <= 3; $i++) {
+            $taskName = 'Test Task #'. $i;
+            $taskData = new TaskData(0, $this->user->id, $taskName);
+            $taskCreator->handle($taskData);
+        }
+
         $response = $this->get('/api/v1/tasks');
 
         $response->assertStatus(200);
@@ -31,8 +49,9 @@ class TaskApiTest extends TestCase
     public function api_task_can_be_created(): void
     {
         $payload = [
-            'title' => "New task"
+            'title' => 'New task',
         ];
+
         $response = $this->postJson('/api/v1/tasks', $payload);
 
         $response->assertStatus(201)
@@ -42,39 +61,40 @@ class TaskApiTest extends TestCase
     /** @test */
     public function api_task_status_can_be_toggled(): void
     {
-        $repository = new TaskRepository(new TaskMapper());
-        $taskCreator = new CreateTask($repository);
-        $task = $taskCreator->handle('Test Task');
+        $taskCreator = new CreateTask($this->taskRepository);
+        $taskData = new TaskData(0, $this->user->id, 'Test Task');
+        $task = $taskCreator->handle($taskData);
         $response = $this->patchJson('/api/v1/tasks/' . $task->id);
 
         $response->assertStatus(200)
-            ->assertJsonFragment(['isCompleted' => !$task->isCompleted]);    
+            ->assertJsonFragment(['isCompleted' => ! $task->isCompleted]);
     }
 
     /** @test */
     public function api_task_can_be_deleted(): void
     {
-        $repository = new TaskRepository(new TaskMapper());
-        $taskCreator = new CreateTask($repository);
-        $task = $taskCreator->handle('Test Task');
-        $response = $this->deleteJson('/api/v1/tasks/' . $task->id);
+        $taskCreator = new CreateTask($this->taskRepository);
+        $taskData = new TaskData(0, $this->user->id, 'Test Task');
+        $task = $taskCreator->handle($taskData);
+
+        $response = $this->deleteJson('/api/v1/tasks/'.$task->id);
 
         $response->assertStatus(200)
-            ->assertJsonFragment(['message' => 'Tache supprimee.']);    
+            ->assertJsonFragment(['message' => 'Tache supprimee.']);
     }
 
     /** @test */
     public function api_task_not_found_on_toggle_status(): void
     {
         $response = $this->patchJson('/api/v1/tasks/1');
-        $response->assertStatus(404);    
+        $response->assertStatus(404);
     }
 
     /** @test */
     public function api_task_not_found_on_delete(): void
     {
         $response = $this->deleteJson('/api/v1/tasks/1');
-        $response->assertStatus(404);    
+        $response->assertStatus(404);
     }
 
     /** @test */
@@ -82,7 +102,7 @@ class TaskApiTest extends TestCase
     {
         $payload = ['title' => 'he'];
         $response = $this->postJson('/api/v1/tasks', $payload);
-        $response->assertStatus(422);    
+        $response->assertStatus(422);
     }
 
     /** @test */
@@ -90,6 +110,6 @@ class TaskApiTest extends TestCase
     {
         $payload = [];
         $response = $this->postJson('/api/v1/tasks', $payload);
-        $response->assertStatus(422);    
+        $response->assertStatus(422);
     }
 }

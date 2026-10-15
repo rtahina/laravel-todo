@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Actions\Task\V1\CreateTask;
 use App\Actions\Task\V1\DTO\TaskData;
 use App\Domain\Task\V1\TaskRepositoryInterface;
-use App\Infrastructure\Task\Persistence\V1\TaskMapper;
-use App\Infrastructure\Task\Persistence\V1\TaskRepository;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -17,6 +15,7 @@ class TaskApiTest extends TestCase
     use RefreshDatabase;
 
     private TaskRepositoryInterface $taskRepository;
+
     private User $user;
 
     protected function setUp(): void
@@ -35,7 +34,7 @@ class TaskApiTest extends TestCase
     {
         $taskCreator = new CreateTask($this->taskRepository);
         for ($i = 1; $i <= 3; $i++) {
-            $taskName = 'Test Task #'. $i;
+            $taskName = 'Test Task #'.$i;
             $taskData = new TaskData(0, $this->user->id, $taskName);
             $taskCreator->handle($taskData);
         }
@@ -64,7 +63,7 @@ class TaskApiTest extends TestCase
         $taskCreator = new CreateTask($this->taskRepository);
         $taskData = new TaskData(0, $this->user->id, 'Test Task');
         $task = $taskCreator->handle($taskData);
-        $response = $this->patchJson('/api/v1/tasks/' . $task->id);
+        $response = $this->patchJson('/api/v1/tasks/'.$task->id);
 
         $response->assertStatus(200)
             ->assertJsonFragment(['isCompleted' => ! $task->isCompleted]);

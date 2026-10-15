@@ -5,6 +5,7 @@ use App\Domain\Task\V1\Exceptions\UserNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -37,5 +38,12 @@ return Application::configure(basePath: dirname(__DIR__))
                 'message' => 'User not found.',
                 'errors' => ['The user was not found.'],
             ], 404);
+        });
+
+        $exceptions->render(function (AccessDeniedHttpException $e) {
+            return response()->json([
+                'message' => 'This action is unauthorized.',
+                'errors' => [$e->getMessage()],
+            ], 403);
         });
     })->create();

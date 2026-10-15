@@ -6,6 +6,7 @@ namespace App\Infrastructure\Task\Persistence\V1;
 
 use App\Domain\Task\V1\Task;
 use App\Domain\Task\V1\TaskRepositoryInterface;
+use App\Infrastructure\Task\Persistence\V1\Task as TaskModel;
 
 final class TaskRepository implements TaskRepositoryInterface
 {

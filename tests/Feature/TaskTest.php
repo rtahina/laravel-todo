@@ -18,6 +18,7 @@ class TaskTest extends TestCase
     use RefreshDatabase;
 
     private TaskRepositoryInterface $taskRepository;
+
     private User $user;
 
     protected function setUp(): void
@@ -32,9 +33,9 @@ class TaskTest extends TestCase
     public function tasks_can_be_listed(): void
     {
         $taskCreator = new CreateTask($this->taskRepository);
-        
+
         for ($i = 1; $i <= 3; $i++) {
-            $taskName = 'Test Task #'. $i;
+            $taskName = 'Test Task #'.$i;
             $taskData = new TaskData(0, $this->user->id, $taskName);
             $taskCreator->handle($taskData);
         }

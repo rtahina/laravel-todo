@@ -8,18 +8,22 @@ use App\Actions\Task\V1\ToggleTaskStatus;
 use App\Domain\Task\V1\Exceptions\TaskNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TaskResource;
+use App\Infrastructure\Task\Persistence\V1\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 final class ToggleTaskStatusController extends Controller
 {
     /**
      * Toggle task status (is_completed).
      */
-    public function __invoke(int $id, ToggleTaskStatus $action): JsonResponse
+    public function __invoke(Task $task, ToggleTaskStatus $action): JsonResponse
     {
+        Gate::authorize('update', $task);
+
         try {
-            $task = $action->handle($id);
+            $task = $action->handle($task->id);
         } catch (TaskNotFoundException $exception) {
             return response()->json(['message' => $exception->getMessage()], Response::HTTP_NOT_FOUND);
         }

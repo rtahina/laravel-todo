@@ -14,7 +14,7 @@ final class TaskData
         public readonly int $userId,
         public readonly string $title,
         public readonly bool $isCompleted = false,
-        public readonly DateTimeImmutable $createdAt = new DateTimeImmutable(),
+        public readonly DateTimeImmutable $createdAt = new DateTimeImmutable,
     ) {}
 
     public static function fromEntity(Task $task): self

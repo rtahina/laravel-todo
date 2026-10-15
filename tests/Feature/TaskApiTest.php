@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Actions\Task\V1\CreateTask;
-use App\Actions\Task\V1\DTO\TaskData;
+use App\Actions\Task\CreateTask;
+use App\Actions\Task\DTO\TaskData;
 use App\Domains\Task\TaskRepositoryInterface;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Task\V1;
 
-use App\Actions\Task\V1\CreateTask;
-use App\Actions\Task\V1\DTO\TaskData;
+use App\Actions\Task\CreateTask;
+use App\Actions\Task\DTO\TaskData;
 use App\Domains\User\Exceptions\UserNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;

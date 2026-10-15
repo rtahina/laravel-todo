@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Task\V1;
+namespace App\Actions\Task;
 
 use App\Domains\Task\Exceptions\TaskNotFoundException;
 use App\Domains\Task\TaskRepositoryInterface;

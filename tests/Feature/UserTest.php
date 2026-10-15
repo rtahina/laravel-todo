@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Actions\User\CreateUser;
 use App\Actions\User\DTO\UserData;
 use App\Actions\User\ListUsers;
-use App\Domain\User\UserRepositoryInterface;
+use App\Domains\User\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;

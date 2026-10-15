@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Task\V1;
 
 use App\Actions\Task\V1\CreateTask;
 use App\Actions\Task\V1\DTO\TaskData;
-use App\Domain\User\Exceptions\UserNotFoundException;
+use App\Domains\User\Exceptions\UserNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Http\Resources\V1\TaskResource;

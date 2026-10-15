@@ -2,6 +2,6 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\User\Exceptions;
+namespace App\Domains\User\Exceptions;
 
 final class UserNotFoundException extends \DomainException {}

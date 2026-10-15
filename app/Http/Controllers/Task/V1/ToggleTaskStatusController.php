@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Task\V1;
 
 use App\Actions\Task\V1\ToggleTaskStatus;
-use App\Domain\Task\V1\Exceptions\TaskNotFoundException;
+use App\Domains\Task\Exceptions\TaskNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TaskResource;
-use App\Infrastructure\Task\Persistence\V1\Task;
+use App\Infrastructures\Task\Persistence\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;

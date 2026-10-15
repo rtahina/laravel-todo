@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Actions\Task\V1\CreateTask;
 use App\Actions\Task\V1\DTO\TaskData;
-use App\Domain\Task\V1\TaskRepositoryInterface;
+use App\Domains\Task\TaskRepositoryInterface;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -79,7 +79,7 @@ class TaskApiTest extends TestCase
         $response = $this->deleteJson('/api/v1/tasks/'.$task->id);
 
         $response->assertStatus(200)
-            ->assertJsonFragment(['message' => 'Tache supprimee.']);
+            ->assertJsonFragment(['message' => 'Task successfully delete.']);
     }
 
     /** @test */

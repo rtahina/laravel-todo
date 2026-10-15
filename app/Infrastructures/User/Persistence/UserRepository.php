@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\User\Persistence;
+namespace App\Infrastructures\User\Persistence;
 
-use App\Domain\User\User as UserEntity;
-use App\Domain\User\UserRepositoryInterface;
+use App\Domains\User\User as UserEntity;
+use App\Domains\User\UserRepositoryInterface;
 use App\Models\User;
 
 final class UserRepository implements UserRepositoryInterface

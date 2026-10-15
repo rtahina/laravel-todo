@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Task\Persistence\V1;
+namespace App\Infrastructures\Task\Persistence;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;

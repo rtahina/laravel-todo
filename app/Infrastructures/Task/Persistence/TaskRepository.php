@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Task\Persistence\V1;
+namespace App\Infrastructures\Task\Persistence;
 
-use App\Domains\Task\V1\Task;
-use App\Domains\Task\V1\TaskRepositoryInterface;
-use App\Infrastructure\Task\Persistence\V1\Task as TaskModel;
+use App\Domains\Task\Task;
+use App\Domains\Task\TaskRepositoryInterface;
+use App\Infrastructures\Task\Persistence\Task as TaskModel;
 
 final class TaskRepository implements TaskRepositoryInterface
 {

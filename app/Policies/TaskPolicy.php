@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Infrastructure\Task\Persistence\V1\Task;
+use App\Infrastructures\Task\Persistence\Task;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

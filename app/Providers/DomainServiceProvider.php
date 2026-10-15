@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Domains\Task\V1\TaskRepositoryInterface;
+use App\Domains\Task\TaskRepositoryInterface;
 use App\Domains\User\UserRepositoryInterface;
-use App\Infrastructure\Task\Persistence\V1\TaskRepository;
-use App\Infrastructure\User\Persistence\UserRepository;
+use App\Infrastructures\Task\Persistence\TaskRepository;
+use App\Infrastructures\User\Persistence\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 final class DomainServiceProvider extends ServiceProvider

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\Task\V1\Exceptions;
+namespace App\Domains\Task\Exceptions;
 
 final class TaskNotFoundException extends \DomainException
 {

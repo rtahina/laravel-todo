@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Actions\Task\V1\CreateTask;
 use App\Actions\Task\V1\DTO\TaskData;
-use App\Domains\Task\V1\TaskRepositoryInterface;
+use App\Domains\Task\TaskRepositoryInterface;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;

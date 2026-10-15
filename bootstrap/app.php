@@ -1,7 +1,7 @@
 <?php
 
-use App\Domain\Task\V1\Exceptions\TaskNotFoundException;
-use App\Domain\Task\V1\Exceptions\UserNotFoundException;
+use App\Domains\Task\V1\Exceptions\TaskNotFoundException;
+use App\Domains\Task\V1\Exceptions\UserNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

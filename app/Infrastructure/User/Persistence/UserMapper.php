@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\User\Persistence;
 
-use App\Domain\User\User;
+use App\Domains\User\User;
 use App\Models\User as UserModel;
 
 final class UserMapper

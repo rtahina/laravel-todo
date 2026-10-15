@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\User\DTO;
 
-use App\Domain\User\User as UserEntity;
+use App\Domains\User\User as UserEntity;
 use App\Models\User;
 
 final class UserData

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\Task\V1;
 
-use App\Domain\Task\V1\Exceptions\TaskNotFoundException;
-use App\Domain\Task\V1\TaskRepositoryInterface;
+use App\Domains\Task\V1\Exceptions\TaskNotFoundException;
+use App\Domains\Task\V1\TaskRepositoryInterface;
 
 final class DeleteTask
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\User;
 
-use App\Domain\User\Exceptions\UserNotFoundException;
-use App\Domain\User\UserRepositoryInterface;
+use App\Domains\User\Exceptions\UserNotFoundException;
+use App\Domains\User\UserRepositoryInterface;
 
 final class DeleteUser
 {

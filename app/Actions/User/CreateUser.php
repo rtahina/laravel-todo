@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Actions\User;
 
 use App\Actions\User\DTO\UserData;
-use App\Domain\User\User;
-use App\Domain\User\UserRepositoryInterface;
+use App\Domains\User\User;
+use App\Domains\User\UserRepositoryInterface;
 
 final class CreateUser
 {

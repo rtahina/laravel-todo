@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Task\V1;
 
-use App\Actions\Task\V1\DeleteTask;
+use App\Actions\Task\DeleteTask;
 use App\Domains\Task\Exceptions\TaskNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Infrastructures\Task\Persistence\Task;

@@ -7,21 +7,25 @@ namespace App\Http\Controllers\Task\V1;
 use App\Actions\Task\V1\DeleteTask;
 use App\Domain\Task\V1\Exceptions\TaskNotFoundException;
 use App\Http\Controllers\Controller;
+use App\Infrastructure\Task\Persistence\V1\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 final class DeleteTaskController extends Controller
 {
     /**
      * Delete task.
      */
-    public function __invoke(int $id, DeleteTask $action): JsonResponse
+    public function __invoke(Task $task, DeleteTask $action): JsonResponse
     {
+        Gate::authorize('delete', $task);
+
         try {
-            $action->handle($id);
+            $action->handle($task->id);
 
             $data = [
-                'message' => 'Tache supprimee.',
+                'message' => 'Task successfully delete.',
             ];
 
             return response()->json($data, Response::HTTP_OK);

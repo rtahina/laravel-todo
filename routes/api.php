@@ -13,7 +13,7 @@ Route::middleware('auth:sanctum')
     ->group(function () {
         Route::get('tasks', ListTasksController::class);
         Route::post('tasks', CreateTaskController::class);
-        Route::patch('tasks/{id}', ToggleTaskStatusController::class);
-        Route::delete('tasks/{id}', DeleteTaskController::class);
+        Route::patch('tasks/{task}', ToggleTaskStatusController::class);
+        Route::delete('tasks/{task}', DeleteTaskController::class);
     }
     );

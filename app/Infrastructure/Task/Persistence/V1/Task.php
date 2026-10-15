@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-final class TaskModel extends Model
+final class Task extends Model
 {
     protected $table = 'tasks';
 

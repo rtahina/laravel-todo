@@ -29,9 +29,10 @@ final class TaskRepository implements TaskRepositoryInterface
         return $model !== null ? $this->mapper->toDomain($model) : null;
     }
 
-    public function all(): array
+    public function all(array $whereArgs = []): array
     {
         return TaskModel::query()
+            ->where($whereArgs)
             ->orderByDesc('created_at')
             ->get()
             ->map(fn (TaskModel $model) => $this->mapper->toDomain($model))

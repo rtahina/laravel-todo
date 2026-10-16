@@ -13,7 +13,7 @@ interface TaskRepositoryInterface
     /**
      * @return Task[]
      */
-    public function all(): array;
+    public function all(array $args): array;
 
     public function delete(int $id): int;
 }

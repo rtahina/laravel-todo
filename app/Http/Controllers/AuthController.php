@@ -2,24 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function __construct()
+    public function login(LoginRequest $request)
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
-
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
         $credentials = $request->only('email', 'password');
 
         $token = Auth::attempt($credentials);
@@ -43,7 +35,7 @@ class AuthController extends Controller
 
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -56,8 +48,15 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        $credentials = $request->only('email', 'password');
 
-        $token = Auth::login($user);
+        $token = Auth::attempt($credentials);
+        if (! $token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
+        }
 
         return response()->json([
             'status' => 'success',

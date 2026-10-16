@@ -8,6 +8,7 @@ use App\Actions\Task\ListTasks;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TaskResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 final class ListTasksController extends Controller
 {
@@ -16,7 +17,11 @@ final class ListTasksController extends Controller
      */
     public function __invoke(ListTasks $action): JsonResponse
     {
-        $tasks = $action->handle();
+        $currentUser = Auth::user();
+        $args = [
+            'user_id' => $currentUser->id,
+        ];
+        $tasks = $action->handle($args);
 
         return TaskResource::collection($tasks)->response();
     }

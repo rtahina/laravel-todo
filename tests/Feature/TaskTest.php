@@ -42,7 +42,7 @@ class TaskTest extends TestCase
 
         $listTask = new ListTasks($this->taskRepository);
         $args = [
-            'user_id' => $this->user->id
+            'user_id' => $this->user->id,
         ];
         $tasks = $listTask->handle($args);
         $this->assertEquals(3, count($tasks));
@@ -56,7 +56,7 @@ class TaskTest extends TestCase
         $taskCreator->handle($taskData);
         $listTask = new ListTasks($this->taskRepository);
         $args = [
-            'user_id' => $this->user->id
+            'user_id' => $this->user->id,
         ];
         $tasks = $listTask->handle($args);
         $this->assertEquals(1, count($tasks));
@@ -83,7 +83,7 @@ class TaskTest extends TestCase
         $deleteTask->handle($task->id);
         $listTask = new ListTasks($this->taskRepository);
         $args = [
-            'user_id' => $this->user->id
+            'user_id' => $this->user->id,
         ];
         $tasks = $listTask->handle($args);
         $this->assertEquals(0, count($tasks));

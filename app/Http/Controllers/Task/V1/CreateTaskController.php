@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Task\V1;
 use App\Actions\Task\CreateTask;
 use App\Actions\Task\DTO\TaskData;
 use App\Domains\User\Exceptions\UserNotFoundException;
+use App\Events\TaskCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Http\Resources\V1\TaskResource;
@@ -31,6 +32,8 @@ final class CreateTaskController extends Controller
             $request->title
         );
         $task = $action->handle($taskData);
+
+        TaskCreated::dispatch($task);
 
         return (new TaskResource($task))->response()->setStatusCode(Response::HTTP_CREATED);
     }

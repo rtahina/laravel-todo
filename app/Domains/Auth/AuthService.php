@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class AuthService
 {
     /**
+     * @param \App\Models\User $user
+     * 
      * @return string $token
      */
     public function generateToken(User $user): string
@@ -20,6 +22,13 @@ class AuthService
         return $accessToken->plainTextToken;
     }
 
+    /**
+     * @param string $token
+     * @param array $body
+     * @param string $message
+     * 
+     * @return JsonResponse
+     */
     public function sendResponseWithToken(
         string $token,
         array $body = [],

@@ -19,6 +19,11 @@ class AuthController extends Controller
         private readonly AuthService $service
     ) {}
 
+    /**
+     * @param LoginRequest $request
+     * 
+     * @return JsonResponse
+     */
     public function login(LoginRequest $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
@@ -34,6 +39,11 @@ class AuthController extends Controller
         ]);
     }
 
+     /**
+     * @param RegisterRequest $request
+     * 
+     * @return JsonResponse
+     */
     public function register(RegisterRequest $request): JsonResponse
     {
         $user = User::create([
@@ -57,6 +67,11 @@ class AuthController extends Controller
         );
     }
 
+     /**
+     * @param Request $request
+     * 
+     * @return JsonResponse
+     */
     public function logout(Request $request): JsonResponse
     {
         if (Auth::check()) {

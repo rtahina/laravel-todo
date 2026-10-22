@@ -7,12 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HttpApiResponse
 {
-     /**
-     * @param array $data
-     * @param string $message
-     * @param int $code Http response code
-     * 
-     * @return JsonResponse
+    /**
+     * @param  int  $code  Http response code
      */
     public static function successResponse(
         array $data = [],
@@ -27,11 +23,7 @@ class HttpApiResponse
     }
 
     /**
-     * @param array $errors
-     * @param string $message
-     * @param int $code Http response code
-     * 
-     * @return JsonResponse
+     * @param  int  $code  Http response code
      */
     public static function errorResponse(
         array $errors = [],
@@ -45,9 +37,6 @@ class HttpApiResponse
         ], $code);
     }
 
-    /**
-     * @return JsonResponse
-     */
     public static function unauthorized(): JsonResponse
     {
         return self::errorResponse(message: 'Unauthorized.', code: Response::HTTP_UNAUTHORIZED);

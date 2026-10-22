@@ -2,92 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\Auth\AuthService;
+use App\Helpers\HttpApiResponse;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request)
+    public function __construct(
+        private readonly AuthService $service
+    ) {}
+
+    public function login(LoginRequest $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
-
-        $token = Auth::attempt($credentials);
-        if (! $token) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
-            ], 401);
+        if (! Auth::attempt($credentials)) {
+            return HttpApiResponse::unauthorized();
         }
 
         $user = Auth::user();
+        $token = $this->service->generateToken($user);
 
-        return response()->json([
-            'status' => 'success',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ],
+        return $this->service->sendResponseWithToken($token, [
+            'user' => UserResource::make($user),
         ]);
-
     }
 
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request): JsonResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make((string) $request->password),
         ]);
-        $credentials = $request->only('email', 'password');
 
-        $token = Auth::attempt($credentials);
-        if (! $token) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
-            ], 401);
+        $credentials = $request->only('email', 'password');
+        if (! Auth::attempt($credentials)) {
+            return HttpApiResponse::unauthorized();
         }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User created successfully',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ],
-        ]);
+        $user = Auth::user();
+        $token = $this->service->generateToken($user);
+
+        return $this->service->sendResponseWithToken($token, [
+            'user' => UserResource::make($user),
+        ],
+            'User registered successfully.'
+        );
     }
 
-    public function logout()
+    public function logout(Request $request): JsonResponse
     {
-        Auth::logout();
+        if (Auth::check()) {
+            $request->user()->tokens()->delete();
+        }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Successfully logged out',
-        ]);
-    }
-
-    public function refresh()
-    {
-        return response()->json([
-            'status' => 'success',
-            'user' => Auth::user(),
-            'authorisation' => [
-                'token' => Auth::refresh(),
-                'type' => 'bearer',
-            ],
-        ]);
+        return HttpApiResponse::successResponse(message: 'Successfully logged out.');
     }
 }

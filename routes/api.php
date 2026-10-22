@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Task\V1\CreateTaskController;
 use App\Http\Controllers\Task\V1\DeleteTaskController;
 use App\Http\Controllers\Task\V1\ListTasksController;
@@ -17,3 +18,8 @@ Route::middleware('auth:sanctum')
         Route::delete('tasks/{task}', DeleteTaskController::class);
     }
     );
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout'])
+    ->middleware('auth:sanctum');

@@ -19,7 +19,7 @@ final class ListTasksController extends Controller
     {
         $currentUser = Auth::user();
         $args = [
-            'user_id' => $currentUser->id,
+            'user_id' => $currentUser?->id,
         ];
         $tasks = $action->handle($args);
 

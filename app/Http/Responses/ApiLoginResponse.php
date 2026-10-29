@@ -9,7 +9,7 @@ class ApiLoginResponse implements LoginResponseContract
 {
     public function toResponse($request): JsonResponse
     {
-        $token = $request->user()->createToken('api-token')->plainTextToken;
+        $token = $request->user()?->createToken('api-token')->plainTextToken;
 
         return response()->json([
             'user' => $request->user(),

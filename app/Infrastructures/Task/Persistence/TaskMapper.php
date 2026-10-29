@@ -21,6 +21,9 @@ final class TaskMapper
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toAttributes(Task $task): array
     {
         return [

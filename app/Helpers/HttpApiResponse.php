@@ -9,6 +9,7 @@ class HttpApiResponse
 {
     /**
      * @param  int  $code  Http response code
+     * @param  array<string, mixed>  $data
      */
     public static function successResponse(
         array $data = [],
@@ -24,6 +25,7 @@ class HttpApiResponse
 
     /**
      * @param  int  $code  Http response code
+     * @param  string[]  $errors
      */
     public static function errorResponse(
         array $errors = [],

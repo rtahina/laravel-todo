@@ -32,7 +32,7 @@ final class User
         return new self($id, $name, $email, $password);
     }
 
-    public function id(): int
+    public function id(): ?int
     {
         return $this->id;
     }

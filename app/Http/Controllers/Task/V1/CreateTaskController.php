@@ -26,10 +26,12 @@ final class CreateTaskController extends Controller
         if (is_null($currentUser)) {
             throw new UserNotFoundException('Creating a task needs a user.');
         }
+        $title = $request->title;
+        settype($title, 'string');
         $taskData = new TaskData(
             0,
             $currentUser->id,
-            $request->title
+            $title
         );
         $task = $action->handle($taskData);
 

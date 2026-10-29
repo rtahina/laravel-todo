@@ -19,6 +19,9 @@ final class UserMapper
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toAttributes(User $user): array
     {
         return [

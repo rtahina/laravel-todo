@@ -10,12 +10,12 @@ interface UserRepositoryInterface
 
     public function findByEmail(string $email): ?User;
 
-    public function save(User $user): ?User;
+    public function save(User $user): User;
 
     /**
      * @return User[]
      */
     public function all(): array;
 
-    public function delete(int $id): int;
+    public function delete(int $id): mixed;
 }

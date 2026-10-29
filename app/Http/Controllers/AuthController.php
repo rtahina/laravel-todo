@@ -19,11 +19,6 @@ class AuthController extends Controller
         private readonly AuthService $service
     ) {}
 
-    /**
-     * @param LoginRequest $request
-     * 
-     * @return JsonResponse
-     */
     public function login(LoginRequest $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
@@ -32,6 +27,11 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+
+        if (is_null($user)) {
+            return HttpApiResponse::unauthorized();
+        }
+
         $token = $this->service->generateToken($user);
 
         return $this->service->sendResponseWithToken($token, [
@@ -39,17 +39,14 @@ class AuthController extends Controller
         ]);
     }
 
-     /**
-     * @param RegisterRequest $request
-     * 
-     * @return JsonResponse
-     */
     public function register(RegisterRequest $request): JsonResponse
     {
+        $password = $request->password;
+        settype($password, 'string');
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make((string) $request->password),
+            'password' => Hash::make($password),
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -58,6 +55,11 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+
+        if (is_null($user)) {
+            return HttpApiResponse::unauthorized();
+        }
+
         $token = $this->service->generateToken($user);
 
         return $this->service->sendResponseWithToken($token, [
@@ -67,15 +69,10 @@ class AuthController extends Controller
         );
     }
 
-     /**
-     * @param Request $request
-     * 
-     * @return JsonResponse
-     */
     public function logout(Request $request): JsonResponse
     {
         if (Auth::check()) {
-            $request->user()->tokens()->delete();
+            $request->user()?->tokens()->delete();
         }
 
         return HttpApiResponse::successResponse(message: 'Successfully logged out.');

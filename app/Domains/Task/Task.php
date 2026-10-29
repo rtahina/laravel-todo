@@ -49,12 +49,12 @@ final class Task
         );
     }
 
-    public function id(): int
+    public function id(): ?int
     {
         return $this->id;
     }
 
-    public function userId(): int
+    public function userId(): ?int
     {
         return $this->userId;
     }

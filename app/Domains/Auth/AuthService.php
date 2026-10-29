@@ -5,29 +5,25 @@ namespace App\Domains\Auth;
 use App\Domains\Auth\Enums\TokenAbility;
 use App\Helpers\HttpApiResponse;
 use App\Models\User;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Http\JsonResponse;
 
 class AuthService
 {
     /**
-     * @param \App\Models\User $user
-     * 
      * @return string $token
      */
     public function generateToken(User $user): string
     {
-        $atExpireTime = now()->addMinutes((int) config('sanctum.expiration'));
+        $expirationTime = config('sanctum.expiration');
+        settype($expirationTime, 'integer');
+        $atExpireTime = now()->addMinutes(intval($expirationTime));
         $accessToken = $user->createToken('api-token', [TokenAbility::ACCESS_API], $atExpireTime);
 
         return $accessToken->plainTextToken;
     }
 
     /**
-     * @param string $token
-     * @param array $body
-     * @param string $message
-     * 
-     * @return JsonResponse
+     * @param  array<string, mixed>  $body
      */
     public function sendResponseWithToken(
         string $token,

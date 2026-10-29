@@ -10,8 +10,8 @@ use DateTimeImmutable;
 final class TaskData
 {
     public function __construct(
-        public readonly int $id,
-        public readonly int $userId,
+        public readonly ?int $id,
+        public readonly ?int $userId,
         public readonly string $title,
         public readonly bool $isCompleted = false,
         public readonly DateTimeImmutable $createdAt = new DateTimeImmutable,

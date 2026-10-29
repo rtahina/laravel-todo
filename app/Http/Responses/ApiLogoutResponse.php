@@ -8,7 +8,7 @@ class ApiLogoutResponse implements LogoutResponseContract
 {
     public function toResponse($request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $request->user()?->currentAccessToken()->delete();
 
         return response()->json(['message' => 'Logged out']);
     }

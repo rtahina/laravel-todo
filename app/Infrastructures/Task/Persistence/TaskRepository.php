@@ -39,7 +39,7 @@ final class TaskRepository implements TaskRepositoryInterface
             ->all();
     }
 
-    public function delete(int $id): int
+    public function delete(int $id): mixed
     {
         return TaskModel::query()->where('id', $id)->delete();
     }

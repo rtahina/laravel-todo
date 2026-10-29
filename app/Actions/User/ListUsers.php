@@ -11,6 +11,9 @@ final class ListUsers
 {
     public function __construct(private readonly UserRepositoryInterface $repository) {}
 
+    /**
+     * @return UserData[]
+     */
     public function handle(): array
     {
         return array_map(

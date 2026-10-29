@@ -11,6 +11,10 @@ final class ListTasks
 {
     public function __construct(private readonly TaskRepositoryInterface $repository) {}
 
+    /**
+     * @param  array<string, mixed>  $args
+     * @return TaskData[]
+     */
     public function handle(array $args): array
     {
         return array_map(

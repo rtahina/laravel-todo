@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * User
+ *
+ * @property-read int $id
+ * @property-read int $user_id
+ * @property-read string $title
+ * @property-read bool $is_completed
+ * @property-read string $created_at
+ */
 final class Task extends Model
 {
     protected $table = 'tasks';
@@ -17,6 +26,9 @@ final class Task extends Model
 
     public $timestamps = false;
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     protected function owner(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -24,25 +36,34 @@ final class Task extends Model
 
     /**
      * Scope a query to only include current user's tasks.
+     *
+     * @param  Builder<Task>  $query
+     * @return Builder<Task>
      */
-    protected function scopeMine(Builder $query, int $userId): void
+    protected function scopeMine(Builder $query, int $userId): Builder
     {
-        $query->where('user_id', $userId);
+        return $query->where('user_id', $userId);
     }
 
     /**
      * Scope a query to only include completed tasks.
+     *
+     * @param  Builder<Task>  $query
+     * @return Builder<Task>
      */
-    protected function scopeCompleted(Builder $query): void
+    protected function scopeCompleted(Builder $query): Builder
     {
-        $query->where('is_completed', true);
+        return $query->where('is_completed', true);
     }
 
     /**
      * Scope a query to only include on going tasks.
+     *
+     * @param  Builder<Task>  $query
+     * @return Builder<Task>
      */
-    protected function scopeOnGoing(Builder $query): void
+    protected function scopeOnGoing(Builder $query): Builder
     {
-        $query->where('is_completed', false);
+        return $query->where('is_completed', false);
     }
 }

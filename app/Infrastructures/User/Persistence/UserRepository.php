@@ -46,7 +46,7 @@ final class UserRepository implements UserRepositoryInterface
             ->all();
     }
 
-    public function delete(int $id): int
+    public function delete(int $id): mixed
     {
         return User::query()->where('id', $id)->delete();
     }

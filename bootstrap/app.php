@@ -3,6 +3,7 @@
 use App\Domains\Task\Exceptions\TaskNotFoundException;
 use App\Domains\User\Exceptions\UserNotFoundException;
 use App\Helpers\HttpApiResponse;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -52,4 +53,13 @@ return Application::configure(basePath: dirname(__DIR__))
                 code: Response::HTTP_UNAUTHORIZED
             );
         });
+
+        $exceptions->render(function (AuthenticationException $e) {
+            return HttpApiResponse::errorResponse(
+                errors: [$e->getMessage()],
+                message: 'This action needs authentification.',
+                code: Response::HTTP_UNAUTHORIZED
+            );
+        });
+        
     })->create();

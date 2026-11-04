@@ -38,6 +38,9 @@ class TaskCreated implements ShouldBroadcast
         return 'new-task-created';
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function broadcastWith(): array
     {
         return ['message' => $this->task->title];

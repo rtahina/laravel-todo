@@ -8,5 +8,5 @@ use App\Actions\Task\DTO\TaskData;
 
 interface TaskNotificationInterface
 {
-    public function send(TaskData $task): void;
+    public function send(TaskData $task): bool;
 }

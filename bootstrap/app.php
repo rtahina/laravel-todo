@@ -61,5 +61,13 @@ return Application::configure(basePath: dirname(__DIR__))
                 code: Response::HTTP_UNAUTHORIZED
             );
         });
+
+        $exceptions->render(function (InvalidArgumentException $e) {
+            return HttpApiResponse::errorResponse(
+                errors: [$e->getMessage()],
+                message: 'There was an error proceding this action.',
+                code: Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        });
         
     })->create();

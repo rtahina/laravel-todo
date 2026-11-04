@@ -6,10 +6,11 @@ use App\Actions\Task\DTO\TaskData;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TaskCreated
+class TaskCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -30,5 +31,18 @@ class TaskCreated
         return [
             new PrivateChannel('task-creation'),
         ];
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'new-task-created';
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
+    {
+        return ['message' => $this->task->title];
     }
 }

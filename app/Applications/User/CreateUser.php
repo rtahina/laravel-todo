@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\User;
+namespace App\Applications\User;
 
-use App\Actions\User\DTO\UserData;
+use App\Applications\User\DTO\UserData;
 use App\Domains\User\User;
 use App\Domains\User\UserRepositoryInterface;
 

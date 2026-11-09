@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\User;
+namespace App\Applications\User;
 
 use App\Domains\User\Exceptions\UserNotFoundException;
 use App\Domains\User\UserRepositoryInterface;

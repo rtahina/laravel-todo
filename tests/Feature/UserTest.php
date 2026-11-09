@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Actions\User\CreateUser;
-use App\Actions\User\DTO\UserData;
-use App\Actions\User\ListUsers;
+use App\Applications\User\CreateUser;
+use App\Applications\User\DTO\UserData;
+use App\Applications\User\ListUsers;
 use App\Domains\User\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

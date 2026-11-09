@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\Task;
 
-use App\Actions\Task\DTO\TaskData;
+use App\Applications\Task\DTO\TaskData;
 use DateTimeImmutable;
 
 final class Task

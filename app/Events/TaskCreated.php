@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Actions\Task\DTO\TaskData;
+use App\Applications\Task\DTO\TaskData;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;

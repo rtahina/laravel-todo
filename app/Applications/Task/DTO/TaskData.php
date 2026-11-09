@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Task\DTO;
+namespace App\Applications\Task\DTO;
 
 use App\Domains\Task\Task;
 use DateTimeImmutable;

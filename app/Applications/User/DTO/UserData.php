@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\User\DTO;
+namespace App\Applications\User\DTO;
 
 use App\Domains\User\User as UserEntity;
 use App\Models\User;

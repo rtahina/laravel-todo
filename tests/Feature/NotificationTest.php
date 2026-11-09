@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Actions\Task\DTO\TaskData;
+use App\Applications\Task\DTO\TaskData;
 use App\Events\TaskCreated;
 use App\Models\User;
 use Illuminate\Broadcasting\BroadcastEvent;

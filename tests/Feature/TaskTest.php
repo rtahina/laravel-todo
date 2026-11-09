@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Actions\Task\CreateTask;
-use App\Actions\Task\DeleteTask;
-use App\Actions\Task\DTO\TaskData;
-use App\Actions\Task\ListTasks;
-use App\Actions\Task\ToggleTaskStatus;
+use App\Applications\Task\CreateTask;
+use App\Applications\Task\DeleteTask;
+use App\Applications\Task\DTO\TaskData;
+use App\Applications\Task\ListTasks;
+use App\Applications\Task\ToggleTaskStatus;
 use App\Domains\Task\Exceptions\TaskNotFoundException;
 use App\Domains\Task\TaskRepositoryInterface;
 use App\Models\User;

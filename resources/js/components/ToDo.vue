@@ -1,3 +1,17 @@
+<script setup>
+    import { defineAsyncComponent } from 'vue'
+    import { useAuthStore } from '../store/auth'
+    import ToDoForm from "./ToDoForm.vue";
+    import rocket from '../images/rocket.svg';
+    import shield from '../images/shield.png';
+
+    const auth = useAuthStore()
+    
+    const ToDoList = defineAsyncComponent(() =>
+        import('./ToDoList.vue')
+    );
+</script>
+
 <template>
     <div class="todo">
         <div class="app-title">
@@ -5,23 +19,16 @@
             <h2>Dynamic Todo App</h2>
             <img :src="rocket" alt="Rocket" height="40px" width="auto" />
         </div>
+        <header>
+            <span>Hello, {{ auth.user.name }}</span>
+            <button @click="auth.logout()">Log out</button>
+        </header>
         <ToDoForm/>
         <div class="todo-list-wrapper">
             <ToDoList />
         </div>
     </div>
 </template>
-
-<script setup>
-    import { defineAsyncComponent } from 'vue'
-    import ToDoForm from "./ToDoForm.vue";
-    import rocket from '../images/rocket.svg';
-    import shield from '../images/shield.png';
-
-    const ToDoList = defineAsyncComponent(() =>
-        import('./ToDoList.vue')
-    );
-</script>
 
 <style scoped>
     .todo {

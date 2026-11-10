@@ -3,6 +3,7 @@
     import TodoListIem from "./TodoListItem.vue";
     import { toDoStore } from "@/store/ToDoStore";
     import Loader from "./Loader.vue"
+    import api from '../api'
     
     const store = toDoStore();
     const nbrItems = ref(0);
@@ -11,17 +12,19 @@
         store.isReady = false;
         
         try {
-            fetch(`${import.meta.env.VITE_API_URL}/${API_VERSION}/tasks`)
-            .then(data => data.json())
-            .then(data => {
+            const { data } = await api.get(`/${API_VERSION}/tasks`)
+            // console.log(data.data);
+            
+            // fetch(`${import.meta.env.VITE_API_URL}/${API_VERSION}/tasks`)
+            // data.then(data => {
                 store.tasks = data.data;
                 nbrItems.value = data.length;
                 store.isReady = true;
-            })
+            // })
         } catch (e) {
-            errorMessage = e.message;
+            store.errorMessage = e.message;
         } finally {
-            store.isReady = false;
+            store.isReady = true;
         }
     }
     fetchTodos();

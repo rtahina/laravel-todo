@@ -20,7 +20,7 @@
             <img :src="rocket" alt="Rocket" height="40px" width="auto" />
         </div>
         <header>
-            <span>Hello, {{ auth.user.name }}</span>
+            <span>Hello, {{ auth.user.name }} - </span>
             <button @click="auth.logout()">Log out</button>
         </header>
         <ToDoForm/>
@@ -45,6 +45,20 @@
             gap: 0.5em;
             justify-content: flex-start;
             align-items: center;
+        }
+
+        header {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5em;
+            color: #555;
+
+            button {
+                border-radius: 9999px;
+                border: 1px solid #ccc;
+                padding: 0.2em 0.5em;
+                background-color: #ddd;
+            }
         }
     }
     h2 {

@@ -41,6 +41,6 @@ class HttpApiResponse
 
     public static function unauthorized(): JsonResponse
     {
-        return self::errorResponse(message: 'Unauthorized.', code: Response::HTTP_UNAUTHORIZED);
+        return self::errorResponse(message: 'Invalid login or password.', code: Response::HTTP_UNAUTHORIZED);
     }
 }

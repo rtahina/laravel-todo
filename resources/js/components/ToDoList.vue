@@ -3,25 +3,28 @@
     import TodoListIem from "./TodoListItem.vue";
     import { toDoStore } from "@/store/ToDoStore";
     import Loader from "./Loader.vue"
+    import api from '../api'
     
     const store = toDoStore();
     const nbrItems = ref(0);
     const API_VERSION = 'v1';
     const fetchTodos = async() => {
         store.isReady = false;
-        
+        const url = `/${API_VERSION}/tasks`;
         try {
-            fetch(`${import.meta.env.VITE_API_URL}/${API_VERSION}/tasks`)
-            .then(data => data.json())
-            .then(data => {
-                store.tasks = data.data;
-                nbrItems.value = data.length;
-                store.isReady = true;
-            })
+            const { data } = await api.get(url)
+            store.tasks = data.data;
+            nbrItems.value = data.length;
+            store.isReady = true;
         } catch (e) {
-            errorMessage = e.message;
+            if (e.response?.data?.status === false) {
+                store.errorMessage = e.response.data.message ?? 'Validation failed.'
+            } else {
+                store.errorMessage = 'Something went wrong. Please try again.'
+            }
+            store.isReady = true;
         } finally {
-            store.isReady = false;
+            store.isReady = true;
         }
     }
     fetchTodos();

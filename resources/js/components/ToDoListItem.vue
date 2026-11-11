@@ -1,5 +1,6 @@
 <script setup>
     import { toDoStore } from "@/store/ToDoStore";
+    import api from '../api'
    
     const store = toDoStore();
     const API_VERSION = 'v1';
@@ -19,74 +20,58 @@
     });
 
     // Toggle a task is_completed column
-    const toggleComplete = (id) => {
+    const toggleComplete = async (id) => {
         const url = `${import.meta.env.VITE_API_URL}/${API_VERSION}/tasks/${id}`;
         try {
-            fetch(url, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
+           await api.patch(url);
+           store.tasks.find((o, i) => {
+                if (o.id === id) {
+                    store.tasks[i] = { 
+                        id: o.id, 
+                        title: o.title, 
+                        isCompleted: !o.isCompleted 
+                    };
+                    return true;
                 }
-            })
-            .then(data => data.json())
-            .then(data => {
-                if (data.errors) {
-                    store.errorMessage = data.message;
-                } else {
-                    store.tasks.find((o, i) => {
-                        if (o.id === id) {
-                            store.tasks[i] = { 
-                                id: o.id, 
-                                title: o.title, 
-                                isCompleted: !o.isCompleted 
-                            };
-                            return true;
-                        }
-                    });
-                }
-            })
+            });
         } catch (e) {
-            store.errorMessage = e.message;
+            if (e.response?.data?.status === false) {
+                store.errorMessage = e.response.data.message ?? 'Validation failed.'
+            } else {
+                store.errorMessage = 'Something went wrong. Please try again.'
+            }
+            store.isReady = true;
         } finally {
             store.isReady = true;
         }
     }
 
     const confirmDeletion = (id) => {
-        if (window.confirm("Voulez-vous vraiment supprimer cette tâche?")) {
+        if (window.confirm("Do you really want to delete this task?")) {
             deleteTask(id)
         }
     }
     
-    const deleteTask = (id) => {
+    const deleteTask = async (id) => {
         store.isReady = false;
         const url = `${import.meta.env.VITE_API_URL}/v1/tasks/${id}`;
         try {
             const deletedId = id;
-            const data = fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            })
-            .then(data => data.json())
-            .then(data => {
-                if (data.errors) {
-                    store.errorMessage = data.message;
-                } else {
-                    const remainingTasks = store.tasks.filter(item => {
-                        return item.id !== deletedId;
-                    });
-                    store.tasks = remainingTasks;
-                }
-                store.isReady = true;
-            })
+            await api.delete(url);
+            const remainingTasks = store.tasks.filter(item => {
+                return item.id !== deletedId;
+            });
+            store.tasks = remainingTasks;
+            store.isReady = true;
         } catch (e) {
-            store.errorMessage = e.message;
+            if (e.response?.data?.status === false) {
+                store.errorMessage = e.response.data.message ?? 'Validation failed.'
+            } else {
+                store.errorMessage = 'Something went wrong. Please try again.'
+            }
+            store.isReady = true;
         } finally {
-            store.isReady = false;
+            store.isReady = true;
         }
     }
 </script>

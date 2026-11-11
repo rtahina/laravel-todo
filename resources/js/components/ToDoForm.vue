@@ -3,42 +3,34 @@
     import { toDoStore } from "@/store/ToDoStore";
     import Error from "./Error.vue";
     import Progress from "./Progress.vue"
+    import api from '../api'
 
     const newTodoItem = ref('');
     const store = toDoStore();
     const API_VERSION = 'v1';
     const { errorMessage, isReady, toggleHideActive, toggleHideCompleted, resetToggles } = store;
 
-    const addNewTask = () =>{
+    const addNewTask = async () =>{
         store.errorMessage = '';
         store.isReady = false;
         const url = `${import.meta.env.VITE_API_URL}/${API_VERSION}/tasks/`;
         const patchData = {
             title: newTodoItem.value
         };
+        
         try {
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(patchData)
-            })
-            .then(data => data.json())
-            .then(data => {
-                if (data.errors) {
-                    store.errorMessage = data.message;
-                } else {
-                    store.tasks.unshift(data.data);
-                    newTodoItem.value = '';
-                }
-                store.isReady = true;
-            })
+            const { data } = await api.post(url, patchData)
+            store.tasks.unshift(data.data);
+            newTodoItem.value = '';
         } catch (e) {
-            store.errorMessage = e.message;
+            if (e.response?.data?.status === false) {
+                store.errorMessage = e.response.data.message ?? 'Validation failed.'
+            } else {
+                store.errorMessage = 'Something went wrong. Please try again.'
+            }
+            store.isReady = true;
         } finally {
-            store.isReady = false;
+            store.isReady = true;
         }
     }
 
@@ -64,7 +56,7 @@
     />
     <div class="app-header">
         <div class="left">
-            <form @submit.prevent="">
+            <form @submit.prevent="submit">
                 <input type="text" v-model="newTodoItem" placeholder="Ajouter une nouvelle tâche" required />
                 <button @click="addNewTask"><span>+</span> Ajouter une tâche</button>
             </form>

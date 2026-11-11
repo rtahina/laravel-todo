@@ -10,19 +10,19 @@
     const API_VERSION = 'v1';
     const fetchTodos = async() => {
         store.isReady = false;
-        
+        const url = `/${API_VERSION}/tasks`;
         try {
-            const { data } = await api.get(`/${API_VERSION}/tasks`)
-            // console.log(data.data);
-            
-            // fetch(`${import.meta.env.VITE_API_URL}/${API_VERSION}/tasks`)
-            // data.then(data => {
-                store.tasks = data.data;
-                nbrItems.value = data.length;
-                store.isReady = true;
-            // })
+            const { data } = await api.get(url)
+            store.tasks = data.data;
+            nbrItems.value = data.length;
+            store.isReady = true;
         } catch (e) {
-            store.errorMessage = e.message;
+            if (e.response?.data?.status === false) {
+                store.errorMessage = e.response.data.message ?? 'Validation failed.'
+            } else {
+                store.errorMessage = 'Something went wrong. Please try again.'
+            }
+            store.isReady = true;
         } finally {
             store.isReady = true;
         }

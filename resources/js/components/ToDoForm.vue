@@ -51,7 +51,7 @@
 </script>
 
 <template>
-     <Error 
+    <Error 
         :message="store.errorMessage"
     />
     <div class="app-header">

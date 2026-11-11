@@ -37,8 +37,9 @@ final class TaskRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => 'Le champ titre est requis.',
-            'title.min' => 'Le titre doit avoir plus de :min caractères.',
+            'title.required' => 'Please enter the new task\'s title.',
+            'title.min' => 'The field "Title" should be at least :min characters.',
+            'title.max' => 'The field "Title" should be at most :max characters.',
         ];
     }
 }

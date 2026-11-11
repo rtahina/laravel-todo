@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -67,6 +68,14 @@ return Application::configure(basePath: dirname(__DIR__))
             return HttpApiResponse::errorResponse(
                 errors: [$e->getMessage()],
                 message: 'There was an error proceding this action.',
+                code: Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        });
+
+        $exceptions->render(function (ValidationException $e) {
+            return HttpApiResponse::errorResponse(
+                errors: $e->errors(),
+                message: $e->getMessage(),
                 code: Response::HTTP_UNPROCESSABLE_ENTITY
             );
         });

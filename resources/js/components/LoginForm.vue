@@ -1,9 +1,11 @@
 <script setup>
     import { ref } from 'vue'
-    import { useAuthStore } from '../store/auth'
+    import { useAuthStore } from '@/store/auth'
+    import { toDoStore } from "@/store/ToDoStore";
 
     const auth = useAuthStore()
-
+    const store = toDoStore();
+    store.errorMessage = '';
     const form = ref({ email: '', password: '' })
     const error = ref('')
     const loading = ref(false)

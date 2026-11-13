@@ -11,7 +11,7 @@
         <span class="progress-bar">
             <span class="completion" :style="`width: ${store.progress()}%`"></span>
         </span>
-        <div>{{ store.countActive() }} tâche{{ store.countActive() > 1 ? 's' : '' }} restante{{ store.countActive() > 1 ? 's' : '' }}</div>
+        <div>{{ store.countActive() }} remaining tasks</div>
     </div>
 </template>
 

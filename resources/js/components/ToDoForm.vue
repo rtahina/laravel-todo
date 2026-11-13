@@ -57,15 +57,15 @@
     <div class="app-header">
         <div class="left">
             <form @submit.prevent="submit">
-                <input type="text" v-model="newTodoItem" placeholder="Ajouter une nouvelle tâche" required />
-                <button @click="addNewTask"><span>+</span> Ajouter une tâche</button>
+                <input type="text" v-model="newTodoItem" placeholder="New Task Name" required />
+                <button @click="addNewTask"><span>+</span>Add New Task</button>
             </form>
         </div>
         <div class="right">
             <div class="tags">
-                <span @click="resetFilters" :class="{active: !store.hideActive && !store.hideCompleted}">Toutes ({{ store.tasks.length }})</span>
-                <span @click="toggleShowActive" :class="{active: store.hideCompleted}">En cours ({{ store.countActive() }}) </span>
-                <span @click="toggleShowCompleted" :class="{active: store.hideActive}">complétée{{ store.countCompleted() > 1 ? 's' : '' }} ({{ store.countCompleted() }})</span> 
+                <span @click="resetFilters" :class="{active: !store.hideActive && !store.hideCompleted}">All ({{ store.tasks.length }})</span>
+                <span @click="toggleShowActive" :class="{active: store.hideCompleted}">On going ({{ store.countActive() }}) </span>
+                <span @click="toggleShowCompleted" :class="{active: store.hideActive}">Completed ({{ store.countCompleted() }})</span> 
             </div>
             <Progress />
         </div>

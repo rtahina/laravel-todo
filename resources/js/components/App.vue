@@ -1,6 +1,6 @@
 <script setup>
   import { onMounted } from 'vue'
-  import { useAuthStore } from '../store/auth'
+  import { useAuthStore } from '@/store/auth'
   import LoginForm from './LoginForm.vue'
   import ToDo from "./ToDo.vue";
 

@@ -1,6 +1,6 @@
 <script setup>
     import { toDoStore } from "@/store/ToDoStore";
-    import api from '../api'
+    import api from '@/api'
    
     const store = toDoStore();
     const API_VERSION = 'v1';

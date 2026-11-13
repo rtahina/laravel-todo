@@ -1,12 +1,11 @@
 <script setup>
-    import { ref, watch } from "vue";
+    import { ref } from "vue";
     import TodoListIem from "./TodoListItem.vue";
     import { toDoStore } from "@/store/ToDoStore";
     import Loader from "./Loader.vue"
-    import api from '../api'
+    import api from '@/api'
     
     const store = toDoStore();
-    const nbrItems = ref(0);
     const API_VERSION = 'v1';
     const fetchTodos = async() => {
         store.isReady = false;
@@ -14,7 +13,7 @@
         try {
             const { data } = await api.get(url)
             store.tasks = data.data;
-            nbrItems.value = data.length;
+            store.nbrItems = data.length;
             store.isReady = true;
         } catch (e) {
             if (e.response?.data?.status === false) {

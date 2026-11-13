@@ -3,12 +3,12 @@
     import { toDoStore } from "@/store/ToDoStore";
     import Error from "./Error.vue";
     import Progress from "./Progress.vue"
-    import api from '../api'
+    import api from '@/api'
 
     const newTodoItem = ref('');
     const store = toDoStore();
     const API_VERSION = 'v1';
-    const { errorMessage, isReady, toggleHideActive, toggleHideCompleted, resetToggles } = store;
+    const { toggleHideActive, toggleHideCompleted, resetToggles } = store;
 
     const addNewTask = async () =>{
         store.errorMessage = '';

@@ -1,5 +1,5 @@
 <script setup>
-    import rocket from '../images/loader.gif';
+    import rocket from '@/images/loader.gif';
 </script>
 
 <template>

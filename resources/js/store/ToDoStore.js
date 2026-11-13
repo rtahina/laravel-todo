@@ -8,6 +8,7 @@ export const toDoStore = defineStore('todos', () => {
     const tasks = ref([]);
     const hideActive = ref(false);
     const hideCompleted = ref(false);
+    const nbrItems = ref(0);
     
     const todo = ref({
         id:0,
@@ -72,6 +73,7 @@ export const toDoStore = defineStore('todos', () => {
         hideCompleted,
         isLoading, 
         isReady, 
-        errorMessage 
+        errorMessage,
+        nbrItems
     };
 });

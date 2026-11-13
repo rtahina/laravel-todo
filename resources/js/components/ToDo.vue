@@ -1,9 +1,9 @@
 <script setup>
     import { defineAsyncComponent } from 'vue'
-    import { useAuthStore } from '../store/auth'
+    import { useAuthStore } from '@/store/auth'
     import ToDoForm from "./ToDoForm.vue";
-    import rocket from '../images/rocket.svg';
-    import shield from '../images/shield.png';
+    import rocket from '@/images/rocket.svg';
+    import shield from '@/images/shield.png';
 
     const auth = useAuthStore()
     

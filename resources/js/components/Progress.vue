@@ -2,16 +2,15 @@
     import { toDoStore } from "@/store/ToDoStore";
 
     const store = toDoStore();
-    const { progress } = store;
 </script>
 
 <template>
     <div class="progress">
-        <div>{{Math.round(store.progress())}}%</div>
+        <div>{{Math.round(store.progress)}}%</div>
         <span class="progress-bar">
-            <span class="completion" :style="`width: ${store.progress()}%`"></span>
+            <span class="completion" :style="`width: ${store.progress}%`"></span>
         </span>
-        <div>{{ store.countActive() }} remaining tasks</div>
+        <div>{{ store.countActive }} remaining tasks</div>
     </div>
 </template>
 

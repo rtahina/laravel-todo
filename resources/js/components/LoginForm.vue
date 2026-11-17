@@ -9,6 +9,7 @@
     store.errorMessage = '';
     const form = ref({ email: '', password: '' })
     const loading = ref(false)
+    store.errorMessage = ''
 
     async function submit() {
         loading.value = true

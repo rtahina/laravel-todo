@@ -64,8 +64,8 @@
         <div class="right">
             <div class="tags">
                 <span @click="resetFilters" :class="{active: !store.hideActive && !store.hideCompleted}">All ({{ store.tasks.length }})</span>
-                <span @click="toggleShowActive" :class="{active: store.hideCompleted}">On going ({{ store.countActive() }}) </span>
-                <span @click="toggleShowCompleted" :class="{active: store.hideActive}">Completed ({{ store.countCompleted() }})</span> 
+                <span @click="toggleShowActive" :class="{active: store.hideCompleted}">On going ({{ store.countActive }}) </span>
+                <span @click="toggleShowCompleted" :class="{active: store.hideActive}">Completed ({{ store.countCompleted }})</span> 
             </div>
             <Progress />
         </div>

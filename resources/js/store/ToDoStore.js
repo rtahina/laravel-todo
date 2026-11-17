@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 export const toDoStore = defineStore('todos', () => {
     const isLoading = ref(false);
@@ -21,30 +21,30 @@ export const toDoStore = defineStore('todos', () => {
         tasks.push(todo)
     }
 
-    const countCompleted = () => {
+    const countCompleted = computed(() => {
         const active = tasks.value.filter(item => {
             return item.isCompleted;
         });
 
         return active.length;
-    }
+    })
 
-    const countActive = () => {
+    const countActive = computed(() => {
         const active = tasks.value.filter(item => {
             return item.isCompleted === false;
         });
 
         return active.length;
-    }
+    })
 
-    const progress = () => {
+    const progress = computed(() => {
         const allTasks = tasks.value.length;
-        const completed = countCompleted();
+        const completed = countCompleted.value;
 
         if (allTasks === 0) return 0;
         
         return (completed * 100) / allTasks;
-    }
+    })
 
     const toggleHideActive = () => {
         return hideActive.value = !hideActive.value;

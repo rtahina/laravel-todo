@@ -45,6 +45,36 @@ class TaskApiTest extends TestCase
     }
 
     /** @test */
+    public function api_completed_tasks_can_be_listed(): void
+    {
+        $taskCreator = new CreateTask($this->taskRepository);
+        for ($i = 1; $i <= 3; $i++) {
+            $taskName = 'Test Task #'.$i;
+            $taskData = new TaskData(0, $this->user->id, $taskName, true);
+            $taskCreator->handle($taskData);
+        }
+
+        $this->getJson('/api/v1/tasks/completed')
+            ->assertOk()
+            ->assertJsonCount(3, 'data');
+    }
+
+    /** @test */
+    public function api_on_going_tasks_can_be_listed(): void
+    {
+        $taskCreator = new CreateTask($this->taskRepository);
+        for ($i = 1; $i <= 3; $i++) {
+            $taskName = 'Test Task #'.$i;
+            $taskData = new TaskData(0, $this->user->id, $taskName, false);
+            $taskCreator->handle($taskData);
+        }
+
+        $this->getJson('/api/v1/tasks/ongoing')
+            ->assertOk()
+            ->assertJsonCount(3, 'data');
+    }
+
+    /** @test */
     public function api_task_can_be_created(): void
     {
         $payload = [

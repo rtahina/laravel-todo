@@ -23,7 +23,7 @@ final class Task
             id: 0,
             userId: $task->userId,
             title: $task->title,
-            isCompleted: false,
+            isCompleted: $task->isCompleted,
             createdAt: new DateTimeImmutable
         );
     }

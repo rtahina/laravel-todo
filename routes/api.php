@@ -11,7 +11,7 @@ use App\Http\Controllers\Task\V1\ListTasksController;
 use App\Http\Controllers\Task\V1\ToggleTaskStatusController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')
+Route::middleware(['auth:sanctum', 'throttle:api'])
     ->prefix('v1')
     ->group(function () {
         Route::get('tasks', ListTasksController::class)->name('task.list');
@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')
     }
     );
 
-Route::post('register', [AuthController::class, 'register'])->name('register');
-Route::post('login', [AuthController::class, 'login'])->name('login');
+Route::post('register', [AuthController::class, 'register'])->middleware('throttle:login')->name('register');
+Route::post('login', [AuthController::class, 'login'])->middleware('throttle:login')->name('login');
 Route::post('logout', [AuthController::class, 'logout'])
     ->middleware('auth:sanctum')->name('logout');
